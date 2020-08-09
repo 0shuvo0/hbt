@@ -3,11 +3,10 @@ name: Publish
 on:
   push:
     branches:
-        - master
+      - master
 
 jobs:
-  release:
-     name: Publish
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
