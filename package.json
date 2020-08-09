@@ -1,0 +1,26 @@
+{
+  "name": "hbt",
+  "version": "0.0.1",
+  "description": "HTML bundler and templating engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0shuvo0/hbt.git"
+  },
+  "keywords": [
+    "html",
+    "bundler",
+    "template",
+    "template-engine",
+    "hbt"
+  ],
+  "author": "0shuvo0",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0shuvo0/hbt/issues"
+  },
+  "homepage": "https://github.com/0shuvo0/hbt#readme"
+}
