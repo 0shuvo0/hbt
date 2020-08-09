@@ -1,6 +1,6 @@
 {
   "name": "hbt",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "HTML bundler and template engine",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,11 @@
   "keywords": [
     "html",
     "bundler",
+    "html-bundler",
+    "minifire",
+    "html-minifire",
     "template",
+    "engine",
     "template-engine",
     "hbt"
   ],

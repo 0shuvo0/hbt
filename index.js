@@ -186,6 +186,12 @@ const compile = (src, dest, data = {}, ops = {}) => {
 		global.destDir = dp
 	}
 	
+	const unwatch = () => {
+		while(global.watching.length){
+			fs.unwatchFile(global.watching.pop())
+		}
+	}
+	
 	const watch = () => {
 		for(let f of global.watching){
 			fs.watchFile(f, () => {
@@ -195,16 +201,11 @@ const compile = (src, dest, data = {}, ops = {}) => {
 				}else{
 					console.log("\x1b[33m", "change detected recompiling ...")
 				}
+				unwatch()
 				run()
 			})
 		}
 		console.log("\x1b[32m", "*watching changes*")
-	}
-	
-	const unwatch = () => {
-		while(global.watching.length){
-			fs.unwatchFile(global.watching.pop())
-		}
 	}
 	
 	function run(){
@@ -216,7 +217,6 @@ const compile = (src, dest, data = {}, ops = {}) => {
 			console.log("\x1b[36m", "compilation finished")
 			
 			if(global.ops.watch){
-				unwatch()
 				global.watching.push(src)
 				watch()
 			}
