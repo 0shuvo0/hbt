@@ -86,11 +86,22 @@ const resource = (url, destPath, name) => {
 }
 
 
+global. modStr =  str => {
+	let len = str.length
+	let sb = str.substr(0, 2)
+	let eb = str.substr(len - 2, 2)
+	str = str.substr(2, len - 4).trim()
+	str = str.replace(/[\n\r\t]/g, "")
+	return sb + str + eb
+}
+
+
 global.Templater = templateText => {
 	return new Function(
 		"data, hbt = " + hbtUtils,
 		"let output=" +
 		JSON.stringify(templateText)
+		.replace(/({{(.+?)}})|(<%(.+?)%>)/gs, global. modStr)
 		.replace(/{{(.+?)}}/g, '"+($1)+"')
 		.replace(/<%(.+?)%>/g, '";$1\noutput+="') +
 		";return output;"
