@@ -91,20 +91,21 @@ global. modStr =  str => {
 	let sb = str.substr(0, 2)
 	let eb = str.substr(len - 2, 2)
 	str = str.substr(2, len - 4).trim()
-	str = str.replace(/[\n\r\t]/g, "")
+	str = str.replace(/[\n\r\t]/g, "").replace(/"/g, "'")
 	return sb + str + eb
 }
 
 
 global.Templater = templateText => {
+	const compileStr = () => {
+		return JSON.stringify(templateText)
+			.replace(/({{(.+?)}})|(<%(.+?)%>)/gs, global. modStr)
+			.replace(/{{(.+?)}}/g, '"+($1)+"')
+			.replace(/<%(.+?)%>/g, '";$1\noutput+="')
+	}
 	return new Function(
 		"data, hbt = " + hbtUtils,
-		"let output=" +
-		JSON.stringify(templateText)
-		.replace(/({{(.+?)}})|(<%(.+?)%>)/gs, global. modStr)
-		.replace(/{{(.+?)}}/g, '"+($1)+"')
-		.replace(/<%(.+?)%>/g, '";$1\noutput+="') +
-		";return output;"
+		`let output = ${ compileStr() };return output;`
 	)
 }
 
@@ -144,7 +145,14 @@ const include = (src, data = {}) => {
 
 
 const hbtUtils = `{
-	PI: 3.14159,
+	cdn: {
+		FA: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js",
+		MDI: "https://fonts.googleapis.com/icon?family=Material+Icons",
+		BOOTSTRAP_CSS: "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css",
+		BOOTSTRAP_JS: "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js",
+		JQUERY: "https://code.jquery.com/jquery-3.5.1.min.js",
+		POPPER: "https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	},
 	lorem: ${ lorem },
 	picsum: ${ picsum },
 	resource: ${ resource },
@@ -181,7 +189,7 @@ const compile = (src, dest, data = {}, ops = {}) => {
 					console.log("\x1b[33m", f + " changed")
 					console.log("\x1b[33m", "recompiling ...")
 				}else{
-					console.log("\x1b[33m", "changes detected recompiling ...")
+					console.log("\x1b[33m", "change detected recompiling ...")
 				}
 				run()
 			})
