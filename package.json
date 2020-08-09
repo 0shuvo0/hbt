@@ -1,6 +1,6 @@
 {
   "name": "hbt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "HTML bundler and template engine",
   "main": "index.js",
   "scripts": {

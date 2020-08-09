@@ -136,11 +136,15 @@ global.compileFile = (src, data) => {
 
 const include = (src, data = {}) => {
 	let p = global.getPath(src)
-	if(global.ops.watch){
-		global.watching.push(global.getPath(global.path.join(global.cwd, p)))
+	try{
+		let res = global.compileFile(p, data)
+		if(global.ops.watch){
+			global.watching.push(global.getPath(global.path.join(global.cwd, p)))
+		}
+		return res
+	}catch(err){
+		console.log("\x1b[31m", "Could not include " + p)
 	}
-	let res = global.compileFile(p, data)
-	return res
 }
 
 
