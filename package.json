@@ -1,6 +1,6 @@
 {
   "name": "hbt",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "HTML bundler and template engine",
   "main": "index.js",
   "scripts": {
@@ -26,5 +26,5 @@
   "bugs": {
     "url": "https://github.com/0shuvo0/hbt/issues"
   },
-  "homepage": "https://github.com/0shuvo0/hbt#readme"
+  "homepage": "https://hbt-doc.netlify.app/"
 }

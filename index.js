@@ -195,6 +195,10 @@ const compile = (src, dest, data = {}, ops = {}) => {
 	const watch = () => {
 		for(let f of global.watching){
 			fs.watchFile(f, () => {
+				if(!fs.existsSync(f)){
+					fs.unwatchFile(f)
+					return
+				}
 				if(global.ops.info){
 					console.log("\x1b[33m", f + " changed")
 					console.log("\x1b[33m", "recompiling ...")
@@ -218,7 +222,11 @@ const compile = (src, dest, data = {}, ops = {}) => {
 			
 			if(global.ops.watch){
 				global.watching.push(src)
-				watch()
+				try{
+					watch()
+				}catch(e){
+					console.log("\x1b[31m", "Error monitoring files: " + e)
+				}
 			}
 		}catch(err){
 			console.log("\x1b[31m", "Error bundling templete: " + err)
